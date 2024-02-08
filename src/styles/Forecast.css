@@ -1,0 +1,37 @@
+.Forecast .weatherForecast {
+  text-align: center;
+  color: #4c2b5f;
+  font-weight: 700;
+  padding: 10px 20px 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Forecast .weatherForecastDay {
+  background-color: rgba(54, 195, 237, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.Forecast .day {
+  font-size: 16px;
+  color: #4c2b5f;
+  opacity: 0.7;
+}
+
+.Forecast .weatherForecastIcon {
+  width: 75px;
+  height: 75px;
+  display: block;
+  margin: 0 auto;
+}
+
+.Forecast .weatherTemperaturesHigh {
+  font-size: 15px;
+}
+
+.Forecast .weatherTemperaturesLow {
+  font-size: 14px;
+  opacity: 0.7;
+  padding-left: 5px;
+}

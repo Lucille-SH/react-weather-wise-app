@@ -1,0 +1,19 @@
+.Footer footer {
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #4b2b5f;
+  font-style: italic;
+}
+
+.Footer footer a {
+  font-weight: 500;
+  color: #a2a8d3;
+  text-decoration: none;
+}
+
+.Footer footer a:hover {
+  font-weight: 500;
+  color: #4b2b5f;
+  text-decoration: underline;
+}
