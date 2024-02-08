@@ -12,7 +12,7 @@ export default function Footer() {
           rel="noreferrer">
           Lucille Shankland
         </a>
-        , and is open-sourced on
+        , is open-sourced on{" "}
         <a
           href="https://github.com/Lucille-SH/react-weather-wise-app"
           target="_blank"
