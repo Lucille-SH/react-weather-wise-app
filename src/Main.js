@@ -1,122 +1,47 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./styles/Main.css";
-import "./styles/Forecast.css";
-import FormattedDate from "./FormattedDate";
+
+import MainWeather from "./MainWeather";
+import Forecast from "./Forecast";
 import axios from "axios";
 import { MagnifyingGlass } from "react-loader-spinner";
 
 export default function Main(props) {
-  let [city, setCity] = useState(" ");
-  let [weather, setWeather] = useState("");
-  let [loaded, setLoaded] = useState(false);
-  let [forecastData, setForecastData] = useState("");
-  let [forecast, setForecast] = useState("");
-
-  function createForecastData(response) {
-    setForecastData({
-      forecastImgUrl: response.data.condition.icon_url,
-      forecastDegrees: Math.round(response.data.daily.temperature.day),
-      forecastTempHigh: Math.round(response.data.daily.temperature.maximum),
-      forecastTempLow: Math.round(response.data.daily.temperature.minimum),
-    });
-
-    // createForecast();
-  }
-
-  //   function createForecast(response) {
-  //  response.data.daily.forEach(function (day, index) {
-  //    if (index < 5) {
-  //    return (
-  //      forecast =
-  //        forecast +
-  //        <div className = "weatherForecastDay">
-  //       <div className="day">{formatDay(day.time)}</div>
-  //               <img src={
-  //                 forecastData.forecastImgUrl} className="weatherForecastIcon"></img>
-  //             <div className="weatherTemperatures">
-  //               <span className="weatherTemperaturesHigh">{forecastData.forecastTempHigh}°</span>
-  //               <span className="weatherTemperaturesLow">{forecastData.forecastTempLow}°</span>
-  //             </div>
-  //             </div>);
-  //    }}
+  let [city, setCity] = useState(props.defaultCity);
+  let [weather, setWeather] = useState({ ready: false });
 
   function createWeather(response) {
     setWeather({
-      date: new Date(response.data.time * 1000),
-      dataCity: response.data.city,
-      condition: response.data.condition.description,
-      humidity: response.data.temperature.humidity,
+      ready: true,
+      city: response.data.name,
+      date: new Date(response.data.dt * 1000),
+      condition: response.data.weather[0].description,
+      humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
-      imgUrl: response.data.condition.icon_url,
-      degrees: Math.round(response.data.temperature.current),
+      imgUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      degrees: Math.round(response.data.main.temp),
       unit: "°C",
     });
-    setLoaded(true);
+  }
+
+  function search() {
+    let apiKey = "a663a922c0245163e87e27571636974e";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    axios.get(apiUrl).then(createWeather);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
   }
 
   function handleChange(event) {
     setCity(event.target.value.trim());
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    let apiKey = "66b4t441aodafc3797bfd80f9495a36b";
-    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
-
-    let forecastApiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
-
-    axios.get(apiUrl).then(createWeather);
-    axios.get(forecastApiUrl).then(createForecastData);
-  }
-
-  if (loaded) {
-    return (
-      <div>
-        <div className="Search">
-          <form className="searchForm">
-            <input
-              type="search"
-              placeholder="Enter a city..."
-              required
-              className="citySearch"
-              autoFocus="on"
-            />
-            <input type="submit" value="Search" className="citySubmit" />
-          </form>
-        </div>
-        <hr className="divider" />
-        <main className="Main">
-          <div className="mainCityDetails">
-            <h1 className="mainCity">{weather.dataCity}</h1>
-            <p>
-              <span>
-                <FormattedDate date={weather.date} />
-              </span>
-              ,<span className="text-capitalize"> {weather.condition}</span>
-              <br />
-              Humidity:
-              <span className="humidityPercent"> {weather.humidity}%</span>,
-              Wind:
-              <span className="windKms"> {weather.wind}km/h</span>
-            </p>
-          </div>
-          <div className="mainTemp">
-            <div className="mainWeatherIcon">
-              {" "}
-              <img src={weather.imgUrl} alt="" />{" "}
-            </div>
-            <div className="mainWeatherDegrees">{weather.degrees}</div>
-            <div className="mainWeatherUnit">{weather.unit}</div>
-          </div>
-        </main>
-        <div className="Forecast">
-          <div className="weatherForecast">{forecast}</div>
-          <hr className="divider" />
-        </div>
-      </div>
-    );
-  } else {
+  if (weather.ready) {
     return (
       <div>
         <div className="Search">
@@ -133,18 +58,29 @@ export default function Main(props) {
           </form>
         </div>
         <hr className="divider" />
-        <div className="text-center">
-          <MagnifyingGlass
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="magnifying-glass-loading"
-            wrapperStyle={{}}
-            wrapperClass="magnifying-glass-wrapper"
-            glassColor="#c0efff"
-            color="#4c2b5f"
-          />
+        <MainWeather data={weather} city={city} />
+        <div className="Forecast">
+          <div className="weatherForecast">
+            <Forecast />
+          </div>
+          <hr className="divider" />
         </div>
+      </div>
+    );
+  } else {
+    search();
+    return (
+      <div className="text-center">
+        <MagnifyingGlass
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="magnifying-glass-loading"
+          wrapperStyle={{}}
+          wrapperClass="magnifying-glass-wrapper"
+          glassColor="#c0efff"
+          color="#4c2b5f"
+        />
       </div>
     );
   }

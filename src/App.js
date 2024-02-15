@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div className="App">
       <div className="container">
-        <Main />
+        <Main defaultCity="London" />
       </div>
       <Footer />
       <script src="src/index.js"></script>
