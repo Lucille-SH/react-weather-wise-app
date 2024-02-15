@@ -25,18 +25,30 @@
   display: flex;
 }
 
-.Main .mainWeatherIcon {
-  font-size: 70px;
+.Main .mainWeatherIcon img {
+  font-size: 40px;
 }
 
-.Main .mainWeatherDegrees {
+.WeatherTemperature .mainWeatherDegrees {
   font-size: 80px;
 }
 
-.Main .mainWeatherUnit {
-  font-size: 30px;
+.WeatherTemperature .mainWeatherUnit {
+  font-size: 25px;
   position: relative;
-  top: 14px;
+  top: 20px;
+  font-weight: 200;
+  padding-left: 10px;
+}
+
+.WeatherTemperature .mainWeatherUnit a {
+  text-decoration: none;
+  color: grey;
+}
+
+.WeatherTemperature .mainWeatherUnit a:hover {
+  color: #ad43ee;
+  font-weight: 600;
 }
 
 .Main .humidityPercent,
@@ -142,19 +154,21 @@
 
   .Main .mainTemp {
     display: flex;
-    padding: 5px;
   }
 
-  .Main .mainWeatherIcon {
-    font-size: 20px;
+  .mainWeatherIcon img {
+    width: 50px;
     padding-top: 10px;
   }
 
-  .Main .mainWeatherDegrees {
-    font-size: 55px;
+  .WeatherTemperature .mainWeatherDegrees {
+    font-size: 45px;
   }
 
-  .Main .mainWeatherUnit {
-    font-size: 20px;
+  .WeatherTemperature .mainWeatherUnit {
+    font-size: 13px;
+    top: 12px;
+    font-weight: 200;
+    padding-left: 5px;
   }
 }

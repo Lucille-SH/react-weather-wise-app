@@ -1,5 +1,6 @@
 import "./styles/Main.css";
 import FormattedDate from "./FormattedDate";
+import WeatherTemperature from "./WeatherTemperature";
 
 export default function MainWeather(props) {
   return (
@@ -23,8 +24,7 @@ export default function MainWeather(props) {
           {" "}
           <img src={props.data.imgUrl} alt="" />{" "}
         </div>
-        <div className="mainWeatherDegrees">{props.data.degrees}</div>
-        <div className="mainWeatherUnit">{props.data.unit}</div>
+        <WeatherTemperature celsius={props.data.degrees} unit="celsius" />
       </div>
     </main>
   );

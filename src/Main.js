@@ -21,7 +21,6 @@ export default function Main(props) {
       wind: response.data.wind.speed,
       imgUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       degrees: Math.round(response.data.main.temp),
-      unit: "°C",
     });
   }
 
