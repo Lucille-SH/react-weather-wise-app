@@ -1,6 +1,5 @@
 import "./styles/App.css";
 import Main from "./Main";
-import Forecast from "./Forecast";
 import Footer from "./Footer";
 
 export default function App() {
@@ -8,7 +7,6 @@ export default function App() {
     <div className="App">
       <div className="container">
         <Main />
-        <Forecast />
       </div>
       <Footer />
       <script src="src/index.js"></script>

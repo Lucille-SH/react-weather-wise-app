@@ -1,37 +1,50 @@
 import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.css";
 import "./styles/Main.css";
+import "./styles/Forecast.css";
+import FormattedDate from "./FormattedDate";
 import axios from "axios";
-import moment from "moment";
+import { MagnifyingGlass } from "react-loader-spinner";
 
-export default function Main() {
-  let local = moment.tz.guess();
-
-  let [city, setCity] = useState({ local });
+export default function Main(props) {
+  let [city, setCity] = useState(" ");
   let [weather, setWeather] = useState("");
   let [loaded, setLoaded] = useState(false);
-  let [date, setDate] = useState("");
+  let [forecastData, setForecastData] = useState("");
+  let [forecast, setForecast] = useState("");
 
-  function createDate() {
-    let days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
+  function createForecastData(response) {
+    setForecastData({
+      forecastImgUrl: response.data.condition.icon_url,
+      forecastDegrees: Math.round(response.data.daily.temperature.day),
+      forecastTempHigh: Math.round(response.data.daily.temperature.maximum),
+      forecastTempLow: Math.round(response.data.daily.temperature.minimum),
+    });
 
-    let now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let day = days[now.getDay()];
-
-    setDate(`${day} ${hours}:${minutes}`);
+    // createForecast();
   }
+
+  //   function createForecast(response) {
+  //  response.data.daily.forEach(function (day, index) {
+  //    if (index < 5) {
+  //    return (
+  //      forecast =
+  //        forecast +
+  //        <div className = "weatherForecastDay">
+  //       <div className="day">{formatDay(day.time)}</div>
+  //               <img src={
+  //                 forecastData.forecastImgUrl} className="weatherForecastIcon"></img>
+  //             <div className="weatherTemperatures">
+  //               <span className="weatherTemperaturesHigh">{forecastData.forecastTempHigh}°</span>
+  //               <span className="weatherTemperaturesLow">{forecastData.forecastTempLow}°</span>
+  //             </div>
+  //             </div>);
+  //    }}
 
   function createWeather(response) {
     setWeather({
+      date: new Date(response.data.time * 1000),
+      dataCity: response.data.city,
       condition: response.data.condition.description,
       humidity: response.data.temperature.humidity,
       wind: response.data.wind.speed,
@@ -43,7 +56,7 @@ export default function Main() {
   }
 
   function handleChange(event) {
-    setCity(event.target.value);
+    setCity(event.target.value.trim());
   }
 
   function handleSubmit(event) {
@@ -51,8 +64,10 @@ export default function Main() {
     let apiKey = "66b4t441aodafc3797bfd80f9495a36b";
     let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
 
+    let forecastApiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
+
     axios.get(apiUrl).then(createWeather);
-    createDate();
+    axios.get(forecastApiUrl).then(createForecastData);
   }
 
   if (loaded) {
@@ -73,9 +88,12 @@ export default function Main() {
         <hr className="divider" />
         <main className="Main">
           <div className="mainCityDetails">
-            <h1 className="mainCity">{city}</h1>
+            <h1 className="mainCity">{weather.dataCity}</h1>
             <p>
-              <span>{date}</span>,<span> {weather.condition}</span>
+              <span>
+                <FormattedDate date={weather.date} />
+              </span>
+              ,<span className="text-capitalize"> {weather.condition}</span>
               <br />
               Humidity:
               <span className="humidityPercent"> {weather.humidity}%</span>,
@@ -92,6 +110,10 @@ export default function Main() {
             <div className="mainWeatherUnit">{weather.unit}</div>
           </div>
         </main>
+        <div className="Forecast">
+          <div className="weatherForecast">{forecast}</div>
+          <hr className="divider" />
+        </div>
       </div>
     );
   } else {
@@ -111,28 +133,18 @@ export default function Main() {
           </form>
         </div>
         <hr className="divider" />
-        <main className="Main">
-          <div className="mainCityDetails">
-            <h1 className="mainCity">{city}</h1>
-            <p>
-              <span>{weather.currentDate}</span>,
-              <span> {weather.currentCondition}</span>
-              <br />
-              Humidity:
-              <span className="humidityPercent"> {weather.humidity}</span>,
-              Wind:
-              <span className="windKms"> {weather.wind}</span>
-            </p>
-          </div>
-          <div className="mainTemp">
-            <div className="mainWeatherIcon">
-              {" "}
-              <img src={weather.imgUrl} alt="" />{" "}
-            </div>
-            <div className="mainWeatherDegrees">{weather.currentDegrees}</div>
-            <div className="mainWeatherUnit">{weather.unit}</div>
-          </div>
-        </main>
+        <div className="text-center">
+          <MagnifyingGlass
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="magnifying-glass-loading"
+            wrapperStyle={{}}
+            wrapperClass="magnifying-glass-wrapper"
+            glassColor="#c0efff"
+            color="#4c2b5f"
+          />
+        </div>
       </div>
     );
   }
