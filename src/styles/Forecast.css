@@ -1,22 +1,19 @@
 .Forecast .weatherForecast {
   text-align: center;
-  color: #4c2b5f;
+  color: white;
   font-weight: 700;
   padding: 10px 20px 20px;
-  display: flex;
-  justify-content: space-around;
 }
 
 .Forecast .weatherForecastDay {
-  background-color: rgba(54, 195, 237, 0.1);
+  background-color: rgba(76, 43, 95, 0.7);
   border-radius: 10px;
   padding: 10px;
 }
 
 .Forecast .day {
   font-size: 16px;
-  color: #4c2b5f;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .Forecast .weatherForecastIcon {
@@ -32,6 +29,6 @@
 
 .Forecast .weatherTemperaturesLow {
   font-size: 14px;
-  opacity: 0.7;
+  opacity: 0.8;
   padding-left: 5px;
 }

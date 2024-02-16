@@ -60,7 +60,7 @@ export default function Main(props) {
         <MainWeather data={weather} city={city} />
         <div className="Forecast">
           <div className="weatherForecast">
-            <Forecast />
+            <Forecast city={city} date={weather.date} />
           </div>
           <hr className="divider" />
         </div>
