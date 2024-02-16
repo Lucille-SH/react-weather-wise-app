@@ -27,7 +27,7 @@ export default function Main(props) {
   }
 
   function search() {
-    let apiKey = "471abb50a7397f314d23764ac25dd598";
+    let apiKey = "2bd326a60dc89a53287e446e819664df";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
     axios.get(apiUrl).then(createWeather);
@@ -60,12 +60,7 @@ export default function Main(props) {
         </div>
         <hr className="divider" />
         <MainWeather data={weather} city={city} />
-        <Forecast
-          latitude={weather.latitude}
-          longitude={weather.longitude}
-          date={weather.date}
-          city={weather.city}
-        />
+        <Forecast latitude={weather.latitude} longitude={weather.longitude} />
         <hr className="divider" />
       </div>
     );

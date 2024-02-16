@@ -5,48 +5,37 @@ import "./styles/Forecast.css";
 import axios from "axios";
 
 export default function Forecast(props) {
-  let [forecastData, setForecastData] = useState({ ready: false });
-  let [forecastImg, setForecastImg] = useState("");
+  let [forecastData, setForecastData] = useState("");
   let [ready, setReady] = useState(false);
 
-  if (ready.true) {
+  function createForecastData(response) {
+    setForecastData(response.data.daily);
+    setReady(true);
+  }
+
+  if (ready === true) {
     return (
       <div className="grid Forecast">
-        <div className="row weatherForecast">
-          <ForecastDay data={forecastData[0]} img={forecastImg[0].icon} />
-          <ForecastDay data={forecastData[1]} img={forecastImg[1].icon} />
-          <ForecastDay data={forecastData[2]} img={forecastImg[2].icon} />
-          <ForecastDay data={forecastData[3]} img={forecastImg[3].icon} />
-          <ForecastDay data={forecastData[4]} img={forecastImg[4].icon} />
-
-          {/* {forecastData.map(function (DailyForecast, index) {
+        {forecastData.map(function (DailyForecast, index) {
           if (index < 5) {
             return (
               <div className="row weatherForecast" key={index}>
-                <ForecastDay data={DailyForecast} img={forecastImg.icon} />
+                <ForecastDay data={DailyForecast} />
               </div>
             );
+          } else {
+            return null;
           }
-        })} */}
-        </div>
+        })}
       </div>
     );
   } else {
-    search();
+    let apiKey = "2bd326a60dc89a53287e446e819664df";
+    let latitude = props.latitude;
+    let longitude = props.longitude;
+    let forecastApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+    axios.get(forecastApiUrl).then(createForecastData);
 
-    function search() {
-      let apiKey = "a663a922c0245163e87e27571636974e";
-      let city = props.city;
-      let forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
-      axios.get(forecastApiUrl).then(createForecastData);
-    }
-
-    function createForecastData(response) {
-      console.log(response.data.list);
-      setReady(true);
-      setForecastData(response.data.list);
-      setForecastImg(response.data.list.weather);
-    }
     return null;
   }
 }
