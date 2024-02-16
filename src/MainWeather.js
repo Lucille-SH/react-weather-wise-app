@@ -11,7 +11,7 @@ export default function MainWeather(props) {
           <h1 className="mainCity pb-2">{props.data.city}</h1>
         </div>
       </div>
-      <div className="row">
+      <div className="row pb-0">
         <div className="col-4 mainCityDetails ps-3">
           <span>
             <FormattedDate date={props.data.date} />

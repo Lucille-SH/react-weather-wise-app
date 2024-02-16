@@ -15,6 +15,8 @@ export default function Main(props) {
     setWeather({
       ready: true,
       city: response.data.name,
+      latitude: response.data.coord.lat,
+      longitude: response.data.coord.lon,
       date: new Date(response.data.dt * 1000),
       condition: response.data.weather[0].description,
       humidity: response.data.main.humidity,
@@ -25,7 +27,7 @@ export default function Main(props) {
   }
 
   function search() {
-    let apiKey = "a663a922c0245163e87e27571636974e";
+    let apiKey = "471abb50a7397f314d23764ac25dd598";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
     axios.get(apiUrl).then(createWeather);
@@ -58,12 +60,13 @@ export default function Main(props) {
         </div>
         <hr className="divider" />
         <MainWeather data={weather} city={city} />
-        <div className="Forecast">
-          <div className="weatherForecast">
-            <Forecast city={city} date={weather.date} />
-          </div>
-          <hr className="divider" />
-        </div>
+        <Forecast
+          latitude={weather.latitude}
+          longitude={weather.longitude}
+          date={weather.date}
+          city={weather.city}
+        />
+        <hr className="divider" />
       </div>
     );
   } else {
