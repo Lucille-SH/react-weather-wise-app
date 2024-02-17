@@ -34,21 +34,11 @@
 }
 
 .WeatherTemperature .mainWeatherUnit {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 200;
   position: relative;
-  top: -40px;
+  top: -35px;
   left: 5px;
-}
-
-.WeatherTemperature .mainWeatherUnit a {
-  text-decoration: none;
-  color: grey;
-}
-
-.WeatherTemperature .mainWeatherUnit a:hover {
-  color: #ad43ee;
-  font-weight: 600;
 }
 
 .Main .humidityPercent,
@@ -152,7 +142,6 @@
   .mainTemp {
     position: relative;
     top: 5px;
-    left: -10px;
   }
 
   .Main .mainWeatherIcon img {
@@ -170,10 +159,10 @@
   }
 
   .WeatherTemperature .mainWeatherUnit {
-    font-size: 15px;
-    font-weight: 200;
+    font-size: 20px;
+    font-weight: 300;
     position: relative;
     top: -30px;
-    left: 5px;
+    left: 0;
   }
 }

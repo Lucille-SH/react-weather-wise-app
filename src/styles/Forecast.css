@@ -1,7 +1,7 @@
 .Forecast .weatherForecast {
   text-align: center;
   color: white;
-  font-weight: 700;
+
   padding: 0 20px 10px;
 }
 
@@ -13,6 +13,7 @@
 .Forecast .weatherForecastDay {
   background-color: rgba(76, 43, 95, 0.7);
   border-radius: 10px;
+  font-weight: 700;
   padding: 10px;
 }
 
@@ -47,7 +48,7 @@
   }
 
   .Forecast .weatherForecastDay {
-    max-width: 15%;
+    max-width: 17%;
     padding: 5px;
   }
 
@@ -63,12 +64,13 @@
 
   .Forecast .weatherTemperaturesHigh {
     font-size: 12px;
+    font-weight: 400;
   }
 
   .Forecast .weatherTemperaturesLow {
     font-size: 12px;
     opacity: 0.8;
-    padding-left: 5px;
+    padding-left: 0;
     font-weight: 200;
   }
 }
