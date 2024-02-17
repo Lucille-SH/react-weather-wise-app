@@ -1,39 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
+import "./styles/Forecast.css";
+import ForecastImage from "./ForecastImage";
 
 export default function ForecastDay(props) {
-  // let [imgUrl, setImgUrl] = useState("");
-
-  // function image() {
-  //   setImgUrl({
-  //     imgUrl: `https://openweathermap.org/img/wn/${props}@2x.png`,
-  //   });
-  // }
-
   function maxTemperature() {
+    console.log(props.data.temp.max);
     let maxTemp = Math.round(props.data.temp.max);
     return `${maxTemp}°`;
   }
 
   function minTemperature() {
+    console.log(props.data.temp.min);
     let minTemp = Math.round(props.data.temp.min);
     return `${minTemp}°`;
   }
 
   function day() {
     let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    let date = new Date(props.data.dt * 1000);
-    let forecastDay = days[date.getDay()];
 
-    return forecastDay;
+    let date = new Date(props.data.dt * 1000);
+    let day = date.getDay();
+
+    return days[day];
   }
 
   return (
-    <div className="weatherForecastDay col-sm m-1">
+    <div>
       <div className="day">{day()}</div>
-      <img
-        src="https://openweathermap.org/img/wn/$10d@2x.png"
-        className="weatherForecastIcon"
-        alt=""></img>
+      <ForecastImage code={props.data.weather[0].icon} />
       <div className="weatherTemperatures">
         <span className="weatherTemperaturesHigh">{maxTemperature()}</span>
         <span className="weatherTemperaturesLow"> {minTemperature()}</span>
