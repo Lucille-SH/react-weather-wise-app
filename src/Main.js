@@ -15,8 +15,7 @@ export default function Main(props) {
     setWeather({
       ready: true,
       city: response.data.name,
-      latitude: response.data.coord.lat,
-      longitude: response.data.coord.lon,
+      coordinates: response.data.coord,
       date: new Date(response.data.dt * 1000),
       condition: response.data.weather[0].description,
       humidity: response.data.main.humidity,
@@ -60,7 +59,7 @@ export default function Main(props) {
         </div>
         <hr className="divider" />
         <MainWeather data={weather} city={city} />
-        <Forecast latitude={weather.latitude} longitude={weather.longitude} />
+        <Forecast coordinates={weather.coordinates} />
         <hr className="divider" />
       </div>
     );
