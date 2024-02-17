@@ -31,7 +31,7 @@ export default function MainWeather(props) {
               {" "}
               <img src={props.data.imgUrl} alt="" />{" "}
             </span>
-            <WeatherTemperature celsius={props.data.degrees} unit="celsius" />
+            <WeatherTemperature celsius={props.data.degrees} />
           </div>
         </div>
       </div>
